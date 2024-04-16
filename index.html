@@ -3,30 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Oluşturma</title>
+    <title>Roblox API ve Veri Düzenleme</title>
 </head>
 <body>
-    <h1>Roblox API</h1>
-    <p id="apiData"></p>
+    <h1>Roblox API ve Veri Düzenleme</h1>
+    
+    <!-- API verilerini gösterecek div -->
+    <div id="apiData">
+        <!-- Veriler burada JavaScript ile doldurulacak -->
+    </div>
+
+    <h2>Düzenlenebilir Veri Formu</h2>
+    <form id="editForm">
+        <label for="playerName">Oyuncu Adı:</label>
+        <input type="text" id="playerName" name="playerName"><br><br>
+
+        <label for="playerLevel">Oyuncu Seviyesi:</label>
+        <input type="number" id="playerLevel" name="playerLevel"><br><br>
+
+        <label for="playerInventory">Oyuncu Envanteri:</label>
+        <input type="text" id="playerInventory" name="playerInventory"><br><br>
+
+        <button type="submit">Verileri Güncelle</button>
+    </form>
 
     <script>
-        // Roblox'dan gelen verileri API olarak sunmak için basit bir JavaScript kodu
-
-        // Simüle edilmiş Roblox verileri
+        // Başlangıçta kullanılacak örnek veriler
         var robloxData = {
             playerName: "examplePlayer",
             playerLevel: 10,
             playerInventory: ["item1", "item2", "item3"]
-            // Buraya daha fazla veri ekleyebilirsiniz
         };
 
-        // API endpoint'i
+        // API endpoint'i - Roblox verilerini JSON formatında döndürür
         function getRobloxData() {
             return JSON.stringify(robloxData);
         }
 
-        // HTML'e API'yi yazdırma
-        document.getElementById("apiData").innerText = getRobloxData();
+        // API verilerini HTML'e yazdırmak için fonksiyon
+        function displayApiData() {
+            document.getElementById("apiData").innerText = getRobloxData();
+        }
+
+        // Form submit olduğunda çağrılacak fonksiyon
+        document.getElementById("editForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Sayfanın yeniden yüklenmesini engelle
+
+            // Formdaki verileri al
+            var playerName = document.getElementById("playerName").value;
+            var playerLevel = document.getElementById("playerLevel").value;
+            var playerInventory = document.getElementById("playerInventory").value.split(',');
+
+            // Yeni verileri güncelle
+            robloxData.playerName = playerName;
+            robloxData.playerLevel = playerLevel;
+            robloxData.playerInventory = playerInventory;
+
+            // Güncellenmiş verileri göster
+            displayApiData();
+        });
+
+        // Sayfa yüklendiğinde API verilerini göster
+        displayApiData();
     </script>
 </body>
 </html>
